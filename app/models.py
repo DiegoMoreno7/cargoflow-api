@@ -1,0 +1,28 @@
+from datetime import datetime, timezone
+
+from app import db
+
+
+class Shipment(db.Model):
+    __tablename__ = "shipments"
+
+    id = db.Column(db.Integer, primary_key=True)
+    origin = db.Column(db.String(120), nullable=False)
+    destination = db.Column(db.String(120), nullable=False)
+    weight_kg = db.Column(db.Float, nullable=False)
+    status = db.Column(db.String(30), nullable=False, default="pendiente")
+    customer_id = db.Column(db.Integer, nullable=False)
+    created_at = db.Column(
+        db.DateTime, nullable=False, default=lambda: datetime.now(timezone.utc)
+    )
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "origin": self.origin,
+            "destination": self.destination,
+            "weight_kg": self.weight_kg,
+            "status": self.status,
+            "customer_id": self.customer_id,
+            "created_at": self.created_at.isoformat(),
+        }
