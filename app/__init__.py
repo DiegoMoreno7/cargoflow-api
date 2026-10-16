@@ -16,8 +16,10 @@ def create_app(config_class=Config):
     migrate.init_app(app, db)
 
     from app.routes.shipments import shipments_bp
+    from app.routes.customers import customers_bp
 
     app.register_blueprint(shipments_bp, url_prefix="/api/v1")
+    app.register_blueprint(customers_bp, url_prefix="/api/v1")
 
     @app.errorhandler(404)
     def handle_404(_error):
